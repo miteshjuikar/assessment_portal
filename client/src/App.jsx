@@ -13,11 +13,13 @@ import { checkAuth } from "./store/userSlice";
 import { useEffect } from "react";
 import CreatorHome from "./pages/creator/Home";
 import CreateAssessment from "./pages/creator/CreateAssessment";
-import CreatorAbout from "./pages/creator/CreatorAbout";
+import CreatorAbout from "./common/About";
 import CreatorContact from "./pages/creator/CreatorContact";
 import { Skeleton } from "./components/ui/skeleton";
 import AdminHome from "./pages/admin/dashboard";
 import UserScore from "./pages/user/UserScore";
+import AssessmentDetailById from "./pages/creator/AssessmentDetailById";
+import About from "./common/About";
 
 function App() {
   const { user, isLoading, error, isAuthenticated } = useSelector(state => state.user);
@@ -76,8 +78,8 @@ function App() {
           >
             <Route path="home" element={<CreatorHome />} />
             <Route path="createAss" element={<CreateAssessment />} />
-            <Route path="about" element={<CreatorAbout />} />
-            <Route path="contact" element={<CreatorContact />} />
+            <Route path="about" element={<About />} />
+            <Route path="assessment/:id" element={<AssessmentDetailById />} />
         </Route>
 
         <Route

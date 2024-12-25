@@ -1,6 +1,6 @@
 
 import { Outlet } from 'react-router-dom'
-import CreatorNavbar from '../creator/header'
+import CreatorNavbar from '../../common/header'
 
 
 function UserLayout() {

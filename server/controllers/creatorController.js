@@ -61,3 +61,41 @@ exports.submitQuestion = async (req, res) => {
     return res.status(500).json({ message: 'Failed to submit question' });
   }
 };
+
+exports.getAllAssessments = async (req, res) => {
+  try {
+    const assessments = await Assessment.find();
+    res.json(assessments);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching assessments" });
+  }
+};
+
+exports.getMyAssessments = async (req, res) => {
+  try {
+    const assessments = await Assessment.find({ createdBy: req.user.id });
+    res.json(assessments);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user assessments" });
+  }
+};
+
+exports.getAssessmentById = async (req, res) => {
+  const { id } = req.params;  // Get the assessment ID from URL parameters
+
+  try {
+    // Find the assessment by ID and populate the 'questions' field
+    const assessment = await Assessment.findById(id)
+      .populate('questions');  // Populate the 'questions' field with the actual question documents
+
+    if (!assessment) {
+      return res.status(404).json({ message: 'Assessment not found' });
+    }
+
+    // Return the assessment and its associated questions
+    res.status(200).json(assessment);
+  } catch (error) {
+    console.error('Error fetching assessment and questions:', error);
+    res.status(500).json({ message: 'Server error' }); // If there's a server-side error
+  }
+};

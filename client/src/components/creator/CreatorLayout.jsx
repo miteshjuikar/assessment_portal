@@ -1,6 +1,6 @@
 
 import { Outlet } from 'react-router-dom'
-import CreatorNavbar from './header'
+import Navbar from '../../common/header'
 
 
 function CreatorLayout() {
@@ -9,7 +9,7 @@ function CreatorLayout() {
   return (
     <>
     <div className="flex flex-col min-h-screen w-full">
-      <CreatorNavbar />
+      <Navbar />
       <main className="flex-grow">
         <Outlet />
       </main>
