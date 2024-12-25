@@ -6,8 +6,6 @@ function CheckAuth({isAuthenticated, user, children}) {
 
     const location = useLocation();
 
-console.log(isAuthenticated, user?.role, );
-
     if(!isAuthenticated && 
         !(location.pathname.includes('/login') || 
         location.pathname.includes('/register'))
@@ -20,7 +18,7 @@ console.log(isAuthenticated, user?.role, );
         location.pathname.includes('/register'))
     ){
         if(user?.role === 'admin'){
-            return <Navigate to='/admin/dashboard' />
+            return <Navigate to='/admin/home' />
         }
         else if(user?.role === 'creator'){
             return <Navigate to='/creator/home' /> 
@@ -40,7 +38,7 @@ console.log(isAuthenticated, user?.role, );
     }
 
     if(isAuthenticated && user.role === 'admin' && (location.pathname.includes('creator') || location.pathname.includes('user')) ){
-        return <Navigate to='/admin/dashboard'/>
+        return <Navigate to='/admin/home'/>
     }
     if(isAuthenticated && user.role === 'creator' && (location.pathname.includes('admin') || location.pathname.includes('user')) ){
         return <Navigate to='/creator/home'/>

@@ -36,5 +36,14 @@ export const registrationFormControl = [
         placeholder: "Enter your password",
         componentType: "input",
         type:"password"
-    }
+    },
+    {
+        label: "Role",
+        name: "role",
+        componentType: "select",
+        options: [
+          { id: "creator", label: "Creator" },
+          { id: "user", label: "User" },
+        ],
+    },
 ];

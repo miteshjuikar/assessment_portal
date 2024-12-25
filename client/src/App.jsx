@@ -1,15 +1,33 @@
 import { Route, Routes } from "react-router-dom"
 import AuthLogin from "./pages/auth/login"
 import AuthRegister from "./pages/auth/register"
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CheckAuth from "./common/check-auth";
-import AdminDashboard from "./pages/admin/dashboard";
 import AdminLayout from "./components/admin/layout";
 import AuthLayout from "./components/auth/layout";
 import UnauthPage from "./pages/auth/unauth";
+import UserHome from "./pages/user/UserHome";
+import UserLayout from "./components/user/UserLayout";
+import CreatorLayout from "./components/creator/CreatorLayout";
+import { checkAuth } from "./store/userSlice";
+import { useEffect } from "react";
+import CreatorHome from "./pages/creator/Home";
+import CreateAssessment from "./pages/creator/CreateAssessment";
+import CreatorAbout from "./pages/creator/CreatorAbout";
+import CreatorContact from "./pages/creator/CreatorContact";
+import { Skeleton } from "./components/ui/skeleton";
+import AdminHome from "./pages/admin/dashboard";
+import UserScore from "./pages/user/UserScore";
 
 function App() {
   const { user, isLoading, error, isAuthenticated } = useSelector(state => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(checkAuth())
+  }, [dispatch]);
+
+  // if (isLoading) return <Skeleton className="w-[800] bg-black h-[600px]" />;
 
   return (
     <>
@@ -44,10 +62,36 @@ function App() {
               </CheckAuth>
             }
           >
-            <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="products" element={<h1>Product</h1>} />
+            <Route path="home" element={<AdminHome />} />
+            <Route path="about" element={<CreatorAbout />} />
         </Route>
 
+        <Route
+            path="/creator"
+            element={
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+                <CreatorLayout />
+              </CheckAuth>
+            }
+          >
+            <Route path="home" element={<CreatorHome />} />
+            <Route path="createAss" element={<CreateAssessment />} />
+            <Route path="about" element={<CreatorAbout />} />
+            <Route path="contact" element={<CreatorContact />} />
+        </Route>
+
+        <Route
+            path="/user"
+            element={
+              <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+                <UserLayout />
+              </CheckAuth>
+            }
+          >
+            <Route path="home" element={<UserHome />} />
+            <Route path="about" element={<CreatorAbout />} />
+            <Route path="score" element={<UserScore />} />
+        </Route>
 
         <Route path="unauth-page" element={<UnauthPage />} />
       </Routes>

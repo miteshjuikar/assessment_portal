@@ -1,22 +1,80 @@
-// src/store/userSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+const frontEndURL = "http://localhost:5000/";
 
 const initialState = {
   isAuthenticated: false, 
   isLoading: false, 
-  // user: { name:"Mitesh", email:"mitesh@gmial.com", role:"admin" },
   user: null,
   error: null,
 };
 
-// Async thunk for login (API call)
-export const loginUser = createAsyncThunk(
-  'user/loginUser',
+export const registerUser = createAsyncThunk(
+  'auth/registerUser',
   async (userCredentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post('https://your-api-url/login', userCredentials);
-      return response.data;  // Assuming the response contains the user data
+      const response = await axios.post(`${frontEndURL}api/auth/register`, userCredentials);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data); // If the API call fails
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  'auth/loginUser',
+  async (userCredentials, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${frontEndURL}api/auth/login`, 
+        userCredentials,
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data); // If the API call fails
+    }
+  }
+);
+
+
+export const checkAuth = createAsyncThunk(
+  "auth/checkauth",
+  async () => {
+    try {
+      const response = await axios.get(
+        `${frontEndURL}api/auth/check-auth`,
+        {
+          withCredentials: true,
+          headers: {
+            "Cache-Control":
+              "no-store, no-cache, must-revalidate, proxy-revalidate",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data); // If the API call fails
+    }
+  }
+);
+
+export const logoutUser = createAsyncThunk(
+  "/auth/logout",
+
+  async () => {
+    try {
+      const response = await axios.post(
+        `${frontEndURL}api/auth/logout`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+  
+      return response.data;
+      
     } catch (error) {
       return rejectWithValue(error.response.data); // If the API call fails
     }
@@ -36,21 +94,60 @@ const userSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      // When registerUser is pending (API call in progress)
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null; 
+      })
+      // When registerUser is fulfilled (API call succeeded)
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.isAuthenticated = false; 
+        state.user = null; 
+        state.isLoading = false; 
+      })
+      // When registerUser is rejected (API call failed)
+      .addCase(registerUser.rejected, (state, action) => {
+        state.isLoading = false; // Set loading to false on error
+        state.error = action.payload || 'Failed to register'; // Set error message
+      })
+
+
       // When loginUser is pending (API call in progress)
       .addCase(loginUser.pending, (state) => {
-        state.isLoading = true; // Set loading to true
-        state.error = null; // Clear previous errors
+        state.isLoading = true;
+        state.error = null;
       })
       // When loginUser is fulfilled (API call succeeded)
       .addCase(loginUser.fulfilled, (state, action) => {
-        state.isAuthenticated = true; // Set authentication to true
-        state.user = action.payload; // Store user data from API response
-        state.isLoading = false; // Set loading to false
+        state.isAuthenticated = action.payload.success;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isLoading = false; 
       })
       // When loginUser is rejected (API call failed)
       .addCase(loginUser.rejected, (state, action) => {
-        state.isLoading = false; // Set loading to false on error
-        state.error = action.payload || 'Failed to login'; // Set error message
+        state.isLoading = false; 
+        state.error = action.payload || 'Failed to login';
+      })
+
+
+      .addCase(checkAuth.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(checkAuth.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.success ? action.payload.user : null;
+        state.isAuthenticated = action.payload.success;
+      })
+      .addCase(checkAuth.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
+
+      .addCase(logoutUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.isAuthenticated = false;
       });
   },
 });

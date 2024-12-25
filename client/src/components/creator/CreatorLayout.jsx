@@ -1,9 +1,9 @@
 
 import { Outlet } from 'react-router-dom'
-import CreatorNavbar from '../creator/header'
+import CreatorNavbar from './header'
 
 
-function AdminLayout() {
+function CreatorLayout() {
 
 
   return (
@@ -18,4 +18,4 @@ function AdminLayout() {
   )
 }
 
-export default AdminLayout
+export default CreatorLayout

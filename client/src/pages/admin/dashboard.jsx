@@ -1,11 +1,13 @@
+import { Button } from '@/components/ui/button'
 import React from 'react'
 
-function AdminDashboard() {
+function AdminHome() {
   return (
     <div>
-      AdminDashboard
+      AdminHome
+      <Button />
     </div>
   )
 }
 
-export default AdminDashboard
+export default AdminHome
