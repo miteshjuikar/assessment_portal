@@ -1,11 +1,23 @@
-import React from 'react'
+import AssessmentDetails from "@/components/creator/assessmentDetail";
+import { useState } from "react";
 
-function CreateAssessment() {
+export function CreateAssessment() {
+  const [formData, setFormData] = useState({name: "", questionsCount: "", duration: "", description: ""});
+  
+  function onSubmit(event) {
+    console.log(formData);
+    
+  }
+
   return (
-    <div>
-      CreateAssessment
-    </div>
-  )
+    <>
+      <AssessmentDetails 
+        formData={formData}
+        setFormData={setFormData} 
+        onSubmit={onSubmit}
+      />
+    </>
+  );
 }
 
-export default CreateAssessment
+export default CreateAssessment;

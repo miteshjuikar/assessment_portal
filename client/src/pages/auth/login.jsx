@@ -35,20 +35,6 @@ function AuthLogin() {
         })
       }
     })
-
-  // dispatch(loginUser(formData)).then((data) => {
-      // if(data?.payload.success){
-      //   toast({
-      //     title: data?.payload?.message,
-      //   })
-      // }
-      // else{
-      //   toast({
-      //     title: data?.payload?.message,
-      //     variant: "destructive",
-      //   })
-      // }
-    // })
   }
 
   return (
