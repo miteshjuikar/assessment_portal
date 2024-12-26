@@ -20,7 +20,7 @@ import AdminHome from "./pages/admin/dashboard";
 import UserScore from "./pages/user/UserScore";
 import AssessmentDetailById from "./pages/creator/AssessmentDetailById";
 import About from "./common/About";
-import TakeAssessment from "./components/user/TakeAssessment";
+import TakeAssessment from "./pages/user/TakeAssessment";
 
 function App() {
   const { user, isLoading, error, isAuthenticated } = useSelector(state => state.user);
