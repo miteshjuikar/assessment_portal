@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@headlessui/react";
 
 const UserHome = () => {
   const [assessments, setAssessments] = useState([]);
   const [loading, setLoading] = useState(true);
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
     axios
       .get("http://localhost:5000/api/creator/assessments")
@@ -18,6 +20,10 @@ const UserHome = () => {
         setLoading(false);
       });
   }, []);
+
+  const handleNavigate = (assessmentId) => {
+    navigate(`/user/assessment/${assessmentId}`);
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -37,12 +43,9 @@ const UserHome = () => {
             <p className="text-gray-500 text-sm mt-4">
               Created by: {assessment.createdBy?.userName || "Unknown"}
             </p>
-            <Link
-              to={`user/assessment/${assessment._id}`}
-              className="text-blue-600 mt-4 inline-block"
-            >
-              Take Assessment →
-            </Link>
+            <Button variant="outline" className="text-blue-600 mt-4 inline-block" onClick={() => handleNavigate(assessment._id)}>
+            Take Assessment →
+            </Button>
           </div>
         ))}
       </div>

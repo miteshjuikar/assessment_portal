@@ -100,7 +100,6 @@ const loginUser = async(req,res) => {
 
 //Logout
 const logoutUser = (req, res) => {
-    console.log("logcon called");
     
     res.clearCookie("token").json({
       success: true,
