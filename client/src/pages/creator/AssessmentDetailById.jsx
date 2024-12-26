@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import { backendDomainName } from '@/common/helper';
 
 const AssessmentDetailById = () => {
   const { id } = useParams();
@@ -8,7 +9,7 @@ const AssessmentDetailById = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/api/creator/assessment/${id}`)
+      .get(`${backendDomainName}api/creator/assessment/${id}`)
       .then(response => {
         setAssessment(response.data);
       })

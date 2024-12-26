@@ -1,6 +1,6 @@
+import { backendDomainName } from '@/common/helper';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-const frontEndURL = "http://localhost:5000/";
 
 const initialState = {
   isAuthenticated: false, 
@@ -13,7 +13,7 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async (userCredentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${frontEndURL}api/auth/register`, userCredentials);
+      const response = await axios.post(`${backendDomainName}api/auth/register`, userCredentials);
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data); // If the API call fails
@@ -25,7 +25,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async (userCredentials, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${frontEndURL}api/auth/login`, 
+      const response = await axios.post(`${backendDomainName}api/auth/login`, 
         userCredentials,
         {
           withCredentials: true,
@@ -44,7 +44,7 @@ export const checkAuth = createAsyncThunk(
   async () => {
     try {
       const response = await axios.get(
-        `${frontEndURL}api/auth/check-auth`,
+        `${backendDomainName}api/auth/check-auth`,
         {
           withCredentials: true,
           headers: {
@@ -66,7 +66,7 @@ export const logoutUser = createAsyncThunk(
   async () => {
     try {
       const response = await axios.post(
-        `${frontEndURL}api/auth/logout`,
+        `${backendDomainName}api/auth/logout`,
         {},
         {
           withCredentials: true,

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@headlessui/react";
+import { backendDomainName } from "@/common/helper";
 
 const UserHome = () => {
   const [assessments, setAssessments] = useState([]);
@@ -10,7 +11,7 @@ const UserHome = () => {
   
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/creator/assessments")
+      .get(`${backendDomainName}api/creator/assessments`)
       .then((response) => {
         setAssessments(response.data);
         setLoading(false);

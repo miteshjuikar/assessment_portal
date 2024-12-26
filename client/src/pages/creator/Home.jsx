@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useNavigate } from 'react-router-dom';
+import { backendDomainName } from '@/common/helper';
 
 export function CreatorHome() {
   const [allAssessments, setAllAssessments] = useState([]);
@@ -16,14 +17,14 @@ export function CreatorHome() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/creator/assessments')
+    axios.get(`${backendDomainName}api/creator/assessments`)
       .then(response => {
         setAllAssessments(response.data);
       })
       .catch(error => console.error("Error fetching assessments:", error));
 
     // Fetch assessments created by the logged-in user
-    axios.get('http://localhost:5000/api/creator/myAssessments', { withCredentials: true })
+    axios.get(`${backendDomainName}api/creator/myAssessments`, { withCredentials: true })
       .then(response => {
         setMyAssessments(response.data);
       })

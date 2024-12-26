@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { backendDomainName } from '@/common/helper';
 
 const StartAssessment = () => {
   const [assessment, setAssessment] = useState(null);
@@ -14,7 +15,7 @@ const StartAssessment = () => {
   useEffect(() => {
     const fetchAssessment = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/creator/assessment/${assessmentId}`);
+        const response = await axios.get(`${backendDomainName}api/creator/assessment/${assessmentId}`);
         setAssessment(response.data);
         setTimeLeft(response.data.duration * 60); // Set timer in seconds based on duration
         setLoading(false);
@@ -51,6 +52,8 @@ const StartAssessment = () => {
   };
 
   const handleSubmit = async () => {
+    console.log("exam submitted");
+    
     // try {
     //   const payload = {
     //     userId: '12345', // Replace with actual userId
@@ -60,7 +63,7 @@ const StartAssessment = () => {
     //       selectedOption: responses[questionId],
     //     })),
     //   };
-    //   await axios.post('http://localhost:5000/api/responses', payload);
+    //   await axios.post(`${backendDomainName}api/responses`, payload);
     //   alert('Responses submitted successfully!');
     // } catch (error) {
     //   console.error('Failed to submit responses', error);

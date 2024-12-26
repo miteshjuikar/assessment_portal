@@ -47,3 +47,5 @@ export const registrationFormControl = [
         ],
     },
 ];
+
+export const backendDomainName = "http://localhost:5000/";

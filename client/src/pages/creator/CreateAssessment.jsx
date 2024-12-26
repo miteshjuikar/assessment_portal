@@ -3,6 +3,7 @@ import AssessmentDetails from "@/components/creator/assessmentDetail";
 import QuestionInputForm from "@/components/creator/QuetionDetails";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { backendDomainName } from "@/common/helper";
 
 export function CreateAssessment() {
   const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ export function CreateAssessment() {
 
   const handleAssessmentSubmit = () => {
     axios
-      .post("http://localhost:5000/api/creator/assessment", formData, {
+      .post(`${backendDomainName}api/creator/assessment`, formData, {
         withCredentials: true, // Ensures cookies are sent with the request
         headers: {
           "Content-Type": "application/json",
@@ -38,7 +39,7 @@ export function CreateAssessment() {
   const handleQuestionSubmit = (questionData) => {
     axios
       .post(
-        `http://localhost:5000/api/creator/assessment/questions`,
+        `${backendDomainName}api/creator/assessment/questions`,
         {
           assessmentId,
           ...questionData,
