@@ -20,7 +20,7 @@ import AdminHome from "./pages/admin/dashboard";
 import UserScore from "./pages/user/UserScore";
 import AssessmentDetailById from "./pages/creator/AssessmentDetailById";
 import About from "./common/About";
-import TakeAssessment from "./pages/user/TakeAssessment";
+import StartAssessment from "./pages/user/StartAssessment";
 
 function App() {
   const { user, isLoading, error, isAuthenticated } = useSelector(state => state.user);
@@ -94,7 +94,7 @@ function App() {
             <Route path="home" element={<UserHome />} />
             <Route path="about" element={<CreatorAbout />} />
             <Route path="score" element={<UserScore />} />
-            <Route path="assessment/:id" element={<TakeAssessment />} />
+            <Route path="assessment/:id" element={<StartAssessment />} />
         </Route>
 
         <Route path="unauth-page" element={<UnauthPage />} />

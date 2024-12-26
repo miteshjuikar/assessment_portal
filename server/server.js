@@ -4,9 +4,9 @@ const cors = require('cors');
 
 const authRouter = require('./routes/userRoutes');
 const creatorRouter = require('./routes/creatorRoutes');
+const userAssessmentRouter = require('./routes/UserAssessmentRoutes');
 
 const { connectToMongoDB } = require('./config/db');
-const bodyParser = require('body-parser');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -40,8 +40,7 @@ app.use(express.json());
 
 app.use('/api/auth', authRouter);
 app.use('/api/creator', creatorRouter);
-// app.use('/api/shop/products', shopProductsRouter);
-
+app.use('/api/user', userAssessmentRouter);
 
 app.listen(PORT, () => console.log(`Server is started on port: ${PORT}`));
 
