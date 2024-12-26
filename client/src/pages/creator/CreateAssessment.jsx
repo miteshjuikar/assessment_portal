@@ -4,6 +4,7 @@ import QuestionInputForm from "@/components/creator/QuetionDetails";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { backendDomainName } from "@/common/helper";
+import { useToast } from "@/hooks/use-toast";
 
 export function CreateAssessment() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ export function CreateAssessment() {
   const [questions, setQuestions] = useState([]);
   const [assessmentCreated, setAssessmentCreated] = useState(false);
   const [assessmentId, setAssessmentId] = useState(null);
+  const { toast } = useToast();
 
   const handleAssessmentSubmit = () => {
     axios
@@ -59,6 +61,10 @@ export function CreateAssessment() {
         } else {
           navigate("/creator/home");
           alert("All questions submitted!");
+          // toast({
+          //     title: "All questions submitted!",
+          //     action: (<ToastAction altText="Goto schedule to undo">Undo</ToastAction>),
+          // })
         }
       })
       .catch((error) => {

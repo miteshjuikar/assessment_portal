@@ -55,9 +55,9 @@ export function CreatorHome() {
                         <h3 className="font-medium text-lg">{assessment.name}</h3>
                         <p className="text-gray-600">{assessment.description}</p>
                       </div>
-                      <Button variant="outline" className="px-4 py-2 text-sm text-teal-700 border-teal-700" onClick={() => handleNavigate(assessment._id)}>
+                      {/* <Button variant="outline" className="px-4 py-2 text-sm text-teal-700 border-teal-700" onClick={() => handleNavigate(assessment._id)}>
                         View Details
-                      </Button>
+                      </Button> */}
                     </div>
                   </li>
                 ))}

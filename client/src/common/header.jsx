@@ -39,7 +39,7 @@ function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0 space-x-4 mr-4">
             <img 
-              src="https://techbeen.co/images/logo/techbeen-logo.png" 
+              src="	https://hirebeen.com/image/newlogo.svg" 
               alt="Techbeen Logo" 
               className="h-10 w-auto"
             />

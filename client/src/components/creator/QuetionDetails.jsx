@@ -11,6 +11,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useToast } from "@/hooks/use-toast";
 
 export function QuestionInputForm({
   onSubmit,
@@ -37,11 +38,19 @@ export function QuestionInputForm({
   const handleCorrectOptionChange = (value) => {
     setQuestionData({ ...questionData, correctOption: Number(value) });
   };
+  
+  const { toast } = useToast();
 
   const submitForm = () => {
     const { questionText, options, correctOption } = questionData;
     if (!questionText || options.some((opt) => !opt) || correctOption === null) {
-      alert("Please fill out the question, all options, and select a correct answer.");
+      // alert("Please fill out the question, all options, and select a correct answer.");
+      toast({
+          variant: "destructive",
+          title: "Uh oh! Something went wrong.",
+          description: "Please fill out the question, all options, and select a correct answer.",
+          action: <ToastAction altText="Try again">Try again</ToastAction>,
+      })
       return;
     }
     onSubmit(questionData); // Submit the question data to the parent
