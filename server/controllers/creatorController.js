@@ -64,10 +64,12 @@ exports.submitQuestion = async (req, res) => {
 
 exports.getAllAssessments = async (req, res) => {
   try {
-    const assessments = await Assessment.find();
+    const assessments = await Assessment.find()
+      .populate('createdBy', 'userName'); // Populating userName and email of the creator
     res.json(assessments);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching assessments" });
+    console.error('Error fetching assessments:', error);
+    res.status(500).json({ message: `Error fetching assessments: ${error.message}` });
   }
 };
 
@@ -84,9 +86,10 @@ exports.getAssessmentById = async (req, res) => {
   const { id } = req.params;  // Get the assessment ID from URL parameters
 
   try {
-    // Find the assessment by ID and populate the 'questions' field
+    // Find the assessment by ID and populate the 'questions' and 'createdBy' fields
     const assessment = await Assessment.findById(id)
-      .populate('questions');  // Populate the 'questions' field with the actual question documents
+      .populate('questions') // Populate the questions
+      .populate('createdBy', 'userName email'); // Include creator details
 
     if (!assessment) {
       return res.status(404).json({ message: 'Assessment not found' });
