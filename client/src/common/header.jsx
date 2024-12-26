@@ -17,7 +17,6 @@ function Navbar() {
       if (data?.payload?.success) {
         toast({
           title: data?.payload?.message,
-          description: "Welcome back",
           action: (
             <ToastAction altText="Goto schedule to undo">Undo</ToastAction>
           ),
