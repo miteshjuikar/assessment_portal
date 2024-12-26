@@ -1,17 +1,18 @@
 const express =  require('express');
 const cookieParser = require("cookie-parser");
 const cors = require('cors');
+require('dotenv').config();
 
 const authRouter = require('./routes/userRoutes');
 const creatorRouter = require('./routes/creatorRoutes');
 const userAssessmentRouter = require('./routes/UserAssessmentRoutes');
+const frontEndDomain = process.env.frontEndDomain
 
 const { connectToMongoDB } = require('./config/db');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-require('dotenv').config();
 const userId = process.env.MONGO_USER;
 const userPassword = process.env.MONGO_PASSWORD;
 
@@ -22,7 +23,7 @@ connectToMongoDB(`mongodb+srv://${userId}:${userPassword}@cluster1.hvniz.mongodb
 );
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: frontEndDomain,
     methods: [ 'GET', 'POST', 'DELETE', 'PUT'],
     allowedHeaders: [
         'Content-Type',
